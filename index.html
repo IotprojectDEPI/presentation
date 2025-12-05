@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aquaense - IoT Fish Farm Monitoring System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            background: #0a1628;
+            color: #fff;
+        }
+
+        .section {
+            min-height: 100vh;
+            padding: 60px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0077b6 0%, #00b4d8 50%, #48cae4 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M20,50 Q30,30 40,50 T60,50 T80,50' stroke='rgba(255,255,255,0.1)' fill='none' stroke-width='2'/%3E%3C/svg%3E");
+            background-size: 200px;
+            animation: waves 10s linear infinite;
+        }
+
+        @keyframes waves {
+            0% { background-position: 0 0; }
+            100% { background-position: 200px 0; }
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text {
+            text-align: left;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            line-height: 1.1;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .hero .tagline {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .fish-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            animation: swim 3s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes swim {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(15px) rotate(5deg); }
+            75% { transform: translateX(-15px) rotate(-5deg); }
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            min-height: 280px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        .image-placeholder:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .image-text {
+            font-size: 1rem;
+            opacity: 0.7;
+            text-align: center;
+            padding: 20px;
+            font-weight: 500;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #48cae4, #00b4d8);
+            border-radius: 2px;
+        }
+
+        .section-title.centered {
+            text-align: center;
+        }
+
+        .section-title.centered::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Compact Grid Layout */
+        .compact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .compact-grid.reverse {
+            direction: rtl;
+        }
+
+        .compact-grid.reverse > * {
+            direction: ltr;
+        }
+
+        .content-box {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 35px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .highlight-box {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 4px solid #48cae4;
+        }
+
+        /* Abstract Section */
+        .abstract {
+            background: linear-gradient(135deg, #023e8a 0%, #0077b6 100%);
+        }
+
+        /* Introduction Section */
+        .introduction {
+            background: linear-gradient(135deg, #005f73 0%, #0a9396 100%);
+        }
+
+        /* Features Section */
+        .features {
+            background: linear-gradient(135deg, #003459 0%, #007ea7 100%);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 30px 20px;
+            border-radius: 16px;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(72, 202, 228, 0.4);
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: #48cae4;
+            font-weight: 600;
+        }
+
+        .feature-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* Data Simulation Section */
+        .data-simulation {
+            background: linear-gradient(135deg, #1d3557 0%, #457b9d 100%);
+        }
+
+        /* ETL Section */
+        .etl {
+            background: linear-gradient(135deg, #0a4b5a 0%, #1b7c8a 100%);
+        }
+
+        .etl-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .etl-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .etl-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 25px;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .etl-step:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(72, 202, 228, 0.4);
+        }
+
+        .etl-step .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #48cae4, #0077b6);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .etl-step .step-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: #48cae4;
+            font-weight: 600;
+        }
+
+        .etl-step .step-content p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .etl-image {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .etl-image .image-placeholder {
+            min-height: 180px;
+        }
+
+        /* Alert System Section */
+        .alerts {
+            background: linear-gradient(135deg, #14466a 0%, #2d9da9 100%);
+        }
+
+        /* Dashboard Section */
+        .dashboard {
+            background: linear-gradient(135deg, #006d77 0%, #83c5be 100%);
+        }
+
+        .dashboard-main {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 40px;
+            align-items: start;
+            margin-bottom: 40px;
+        }
+
+        .dashboard-main-image {
+            min-height: 380px;
+        }
+
+        .dashboard-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .dashboard-feature {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 3px solid #48cae4;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-feature:hover {
+            background: rgba(255, 255, 255, 0.16);
+            transform: translateX(5px);
+        }
+
+        .dashboard-feature h4 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .dashboard-feature p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .dashboard-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .dashboard-gallery .image-placeholder {
+            min-height: 200px;
+        }
+
+        /* Conclusion Section */
+        .conclusion {
+            background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+        }
+
+        .vision-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .vision-point {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 25px 20px;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .vision-point:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 209, 102, 0.4);
+        }
+
+        .vision-point h4 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: #ffd166;
+            font-weight: 600;
+        }
+
+        .vision-point p {
+            font-size: 0.95rem;
+        }
+
+        .conclusion-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+            align-items: center;
+        }
+
+        /* Team Section */
+        .team {
+            background: linear-gradient(135deg, #023047 0%, #219ebc 100%);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .team-card {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 25px 15px;
+            border-radius: 14px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .team-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border-color: rgba(72, 202, 228, 0.5);
+        }
+
+        .team-card.leader {
+            background: linear-gradient(135deg, rgba(255, 209, 102, 0.15) 0%, rgba(255, 209, 102, 0.05) 100%);
+            border: 2px solid rgba(255, 209, 102, 0.4);
+        }
+
+        .team-card.leader:hover {
+            border-color: rgba(255, 209, 102, 0.7);
+            box-shadow: 0 15px 35px rgba(255, 209, 102, 0.15);
+        }
+
+        .team-card.leader .team-avatar {
+            background: linear-gradient(135deg, #ffd166, #f4a261);
+            border-color: rgba(255, 209, 102, 0.5);
+        }
+
+        .team-card.leader .role {
+            color: #ffd166;
+        }
+
+        .team-avatar {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #48cae4, #0077b6);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .team-card h3 {
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            color: #fff;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+
+        .team-card .role {
+            font-size: 0.75rem;
+            color: #48cae4;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .team-footer {
+            margin-top: 60px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .team-footer h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .team-footer .fish-icon {
+            font-size: 2rem;
+            margin-top: 15px;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 50%;
+            right: 25px;
+            transform: translateY(-50%);
+            z-index: 1000;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            margin: 12px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-dot::before {
+            content: attr(data-label);
+            position: absolute;
+            right: 22px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 119, 182, 0.95);
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot:hover::before {
+            opacity: 1;
+        }
+
+        .nav-dot.active {
+            background: #48cae4;
+            transform: scale(1.4);
+        }
+
+        .nav-dot:hover {
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Bubbles */
+        .bubbles {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: rise 8s infinite ease-in;
+        }
+
+        @keyframes rise {
+            0% { bottom: -50px; opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.3; }
+            100% { bottom: 100%; opacity: 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .team-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .dashboard-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 1100px) {
+            .feature-grid, .vision-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .etl-container {
+                grid-template-columns: 1fr;
+            }
+
+            .etl-image {
+                flex-direction: row;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .hero-content, .compact-grid, .dashboard-main, .conclusion-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .hero-text {
+                text-align: center;
+            }
+
+            .section-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .compact-grid.reverse {
+                direction: ltr;
+            }
+
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dashboard-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .etl-image {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .section {
+                padding: 50px 5%;
+            }
+
+            .feature-grid, .vision-grid, .dashboard-features {
+                grid-template-columns: 1fr;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .nav {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Dots -->
+    <div class="nav" id="nav">
+        <div class="nav-dot active" data-section="0" data-label="Home"></div>
+        <div class="nav-dot" data-section="1" data-label="Abstract"></div>
+        <div class="nav-dot" data-section="2" data-label="Introduction"></div>
+        <div class="nav-dot" data-section="3" data-label="Features"></div>
+        <div class="nav-dot" data-section="4" data-label="Data Simulation"></div>
+        <div class="nav-dot" data-section="5" data-label="ETL System"></div>
+        <div class="nav-dot" data-section="6" data-label="Alerts"></div>
+        <div class="nav-dot" data-section="7" data-label="Dashboard"></div>
+        <div class="nav-dot" data-section="8" data-label="Conclusion"></div>
+        <div class="nav-dot" data-section="9" data-label="Team"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="section hero visible">
+        <div class="bubbles">
+            <div class="bubble" style="left: 10%; width: 20px; height: 20px; animation-delay: 0s;"></div>
+            <div class="bubble" style="left: 20%; width: 40px; height: 40px; animation-delay: 2s;"></div>
+            <div class="bubble" style="left: 35%; width: 25px; height: 25px; animation-delay: 4s;"></div>
+            <div class="bubble" style="left: 50%; width: 30px; height: 30px; animation-delay: 1s;"></div>
+            <div class="bubble" style="left: 65%; width: 15px; height: 15px; animation-delay: 3s;"></div>
+            <div class="bubble" style="left: 80%; width: 35px; height: 35px; animation-delay: 5s;"></div>
+            <div class="bubble" style="left: 90%; width: 20px; height: 20px; animation-delay: 2.5s;"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="fish-icon">🐟</div>
+                    <h1>AQUAENSE</h1>
+                    <div class="subtitle">IoT-Based Fish Farm Monitoring System</div>
+                    <div class="tagline">
+                        Revolutionizing Egyptian Aquaculture through Smart Technology. Supporting Egypt's Vision 2030 for Sustainable Agriculture.
+                    </div>
+                </div>
+                <div class="image-placeholder" style="min-height: 350px;">
+                    <div class="image-text">🐟 Main System Overview 🐟<br><br>Smart Fish Farm Dashboard</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Abstract Section -->
+    <section class="section abstract">
+        <div class="container">
+            <div class="compact-grid">
+                <div>
+                    <h2 class="section-title">Abstract</h2>
+                    <div class="content-box">
+                        <p>Aquaense is an IoT-based monitoring system developed to modernize fish farming operations in Egypt. Aligned with Egypt's Vision 2030, it provides real-time monitoring for aquaculture facilities.</p>
+                        <div class="highlight-box">
+                            <strong>📊 System Capacity:</strong><br>
+                            • Up to <strong>11 distinct fish tanks</strong><br>
+                            • Up to <strong>8 sensors per tank</strong>
+                        </div>
+                        <p>Complete end-to-end data pipeline: simulation, ETL, alerting, and web visualization for sustainable smart farming.</p>
+                    </div>
+                </div>
+                <div class="image-placeholder">
+                    <div class="image-text">📊 System Architecture 📊<br><br>Complete IoT Pipeline</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="section introduction">
+        <div class="container">
+            <div class="compact-grid reverse">
+                <div>
+                    <h2 class="section-title">Introduction</h2>
+                    <p style="margin-bottom: 20px; line-height: 1.8;">Egypt's Vision 2030 emphasizes sustainable development and technological innovation. Aquaense delivers a comprehensive IoT monitoring solution for fish farming.</p>
+                    <div class="highlight-box">
+                        <strong>🎯 Key Capabilities:</strong>
+                        <ul style="margin-top: 10px; margin-left: 20px; line-height: 1.8;">
+                            <li>Monitor 11 independent fish tanks</li>
+                            <li>8 sensors per tank</li>
+                            <li>Multiple species support</li>
+                            <li>Scalable architecture</li>
+                        </ul>
+                    </div>
+                    <p style="line-height: 1.8;">Sensors track temperature, dissolved oxygen, pH, ammonia, turbidity, and other vital indicators impacting fish health.</p>
+                </div>
+                <div class="image-placeholder">
+                    <div class="image-text">🎯 Vision 2030 🎯<br><br>Strategic Goals</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Overview Section -->
+    <section class="section features">
+        <div class="container">
+            <h2 class="section-title centered">Project Features</h2>
+            <p style="text-align: center; font-size: 1.1rem; margin-bottom: 30px; opacity: 0.9;">
+                Four Integrated Components • Complete IoT Data Pipeline
+            </p>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="icon">📡</div>
+                    <h3>Real-time Data Simulation</h3>
+                    <p>Actual fish farm data for realistic testing and validation.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">⚙️</div>
+                    <h3>ETL System</h3>
+                    <p>Python pipeline loading data every 5 seconds to SQLite3.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🚨</div>
+                    <h3>Alert System</h3>
+                    <p>Apache Kafka-powered real-time critical alerts.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📊</div>
+                    <h3>Web Dashboard</h3>
+                    <p>Flask-based interactive live monitoring interface.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Simulation Section -->
+    <section class="section data-simulation">
+        <div class="container">
+            <div class="compact-grid">
+                <div>
+                    <h2 class="section-title">Data Simulation</h2>
+                    <div class="content-box">
+                        <h3 style="margin-bottom: 15px;">🔬 Authentic Data Approach</h3>
+                        <p>Real-world sensor data collected from operational fish farms through research databases and industry partnerships.</p>
+                        <div class="highlight-box">
+                            <strong>Data Sources:</strong>
+                            <ul style="margin-top: 8px; margin-left: 20px; line-height: 1.6;">
+                                <li>Operational facility datasets</li>
+                                <li>Various locations & species</li>
+                                <li>Different configurations & seasons</li>
+                            </ul>
+                        </div>
+                        <p>Preserves statistical properties, temporal dynamics, and realistic variability patterns.</p>
+                    </div>
+                </div>
+                <div class="image-placeholder">
+                    <div class="image-text">📈 Data Collection & Processing 📈<br><br>Real Farm Data Sources</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ETL System Section -->
+    <section class="section etl">
+        <div class="container">
+            <h2 class="section-title centered">ETL System</h2>
+            <p style="text-align: center; font-size: 1.1rem; margin-bottom: 10px; opacity: 0.9;">
+                Foundational Data Processing Layer • Continuous 5-Second Cycle
+            </p>
+            <div class="etl-container">
+                <div class="etl-steps">
+                    <div class="etl-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>EXTRACT</h4>
+                            <p>Retrieves batches of sensor readings from the simulation dataset every 5 seconds, maintaining proper temporal sequencing across all monitored tanks.</p>
+                        </div>
+                    </div>
+                    <div class="etl-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>TRANSFORM</h4>
+                            <p>Classifies readings into categories: Normal, Warning, Critical (F+, F++, F–, F––) based on species-specific thresholds and optimal ranges.</p>
+                        </div>
+                    </div>
+                    <div class="etl-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>LOAD</h4>
+                            <p>Commits categorized data to SQLite3 database with comprehensive records including timestamps, tank IDs, sensor types, and classifications.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="etl-image">
+                    <div class="image-placeholder">
+                        <div class="image-text">🔧 ETL Pipeline Flow 🔧<br><br>Data Processing Architecture</div>
+                    </div>
+                    <div class="image-placeholder">
+                        <div class="image-text">💾 Database Schema 💾<br><br>SQLite3 Structure</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Alert System Section -->
+    <section class="section alerts">
+        <div class="container">
+            <div class="compact-grid reverse">
+                <div>
+                    <h2 class="section-title">Alert System</h2>
+                    <div class="content-box">
+                        <h3 style="margin-bottom: 15px;">⚡ Intelligent Real-time Alerting</h3>
+                        <p>Continuous monitoring triggers immediate notifications for critical threshold breaches using Apache Kafka.</p>
+                        <div class="highlight-box">
+                            <strong>Detection Logic:</strong><br>
+                            Python script queries every 5 seconds, identifying critical categories (F+, F++, F–, F––) indicating threats to fish health.
+                        </div>
+                        <p><strong>Distribution:</strong> Alerts published to Kafka topics for dashboard, email, SMS, mobile apps, and automated controls.</p>
+                    </div>
+                </div>
+                <div class="image-placeholder">
+                    <div class="image-text">🚨 Apache Kafka Architecture 🚨<br><br>Alert Flow Diagram</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section class="section dashboard">
+        <div class="container">
+            <h2 class="section-title centered">Real-time Dashboard</h2>
+            <p style="text-align: center; margin-bottom: 30px; opacity: 0.9;">Flask-powered Responsive Interface • Any Device</p>
+            
+            <div class="dashboard-main">
+                <div class="image-placeholder dashboard-main-image">
+                    <div class="image-text">🖥️ Dashboard Main Interface 🖥️<br><br>Live Monitoring Control Center</div>
+                </div>
+                <div class="dashboard-features">
+                    <div class="dashboard-feature">
+                        <h4>📊 Sensor Status Panel</h4>
+                        <p>Color-coded indicators for instant overview.</p>
+                    </div>
+                    <div class="dashboard-feature">
+                        <h4>📈 Trend Analysis</h4>
+                        <p>Interactive time-series charts.</p>
+                    </div>
+                    <div class="dashboard-feature">
+                        <h4>🔔 Active Alerts</h4>
+                        <p>All critical alerts with details.</p>
+                    </div>
+                    <div class="dashboard-feature">
+                        <h4>🐟 Tank Overview</h4>
+                        <p>Species, capacity, sensors status.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-gallery">
+                <div class="image-placeholder">
+                    <div class="image-text">📉 Trend Charts 📉<br><br>Historical Data</div>
+                </div>
+                <div class="image-placeholder">
+                    <div class="image-text">⚠️ Alert Panel ⚠️<br><br>Notifications</div>
+                </div>
+                <div class="image-placeholder">
+                    <div class="image-text">🐠 Tank Status 🐠<br><br>Real-time Monitoring</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusion Section -->
+    <section class="section conclusion">
+        <div class="container">
+            <h2 class="section-title centered">Conclusion</h2>
+            <p style="text-align: center; font-size: 1.1rem; margin-bottom: 25px; max-width: 900px; margin-left: auto; margin-right: auto;">
+                Aquaense demonstrates successful implementation of a comprehensive IoT monitoring solution for Egypt's aquaculture industry.
+            </p>
+            <div class="vision-grid">
+                <div class="vision-point">
+                    <h4>🌱 Sustainability</h4>
+                    <p>Reduces waste, minimizes treatments, prevents losses.</p>
+                </div>
+                <div class="vision-point">
+                    <h4>⚡ Efficiency</h4>
+                    <p>Optimizes schedules and corrective measures.</p>
+                </div>
+                <div class="vision-point">
+                    <h4>💡 Innovation</h4>
+                    <p>IoT sensors with distributed streaming.</p>
+                </div>
+                <div class="vision-point">
+                    <h4>📈 Economic Growth</h4>
+                    <p>Enhanced productivity and food security.</p>
+                </div>
+            </div>
+            <div class="conclusion-grid">
+                <div class="content-box">
+                    <h3 style="margin-bottom: 15px;">Technical Achievements</h3>
+                    <p>Production-grade IoT pipeline with seamless data flow from simulation through ETL to user interfaces. Modular, scalable design ready for growing aquaculture needs.</p>
+                    <p style="margin-top: 15px; font-weight: 600; color: #ffd166;">Building sustainable, technology-enabled economic sectors for Vision 2030.</p>
+                </div>
+                <div class="image-placeholder">
+                    <div class="image-text">🎯 Future Vision 🎯<br><br>Smart Aquaculture Roadmap</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="section team">
+        <div class="container">
+            <h2 class="section-title centered">Our Team</h2>
+            <p style="text-align: center; font-size: 1.1rem; opacity: 0.9;">
+                Meet the talented individuals behind Aquaense
+            </p>
+            
+            <div class="team-grid">
+                <div class="team-card leader">
+                    <div class="team-avatar">👨‍💼</div>
+                    <h3>Abanob Thabet Fathy Agban</h3>
+                    <p class="role">Team Leader</p>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-avatar">👨‍💻</div>
+                    <h3>Sherif Diaa Elsayed Hanafy</h3>
+                    <p class="role">Developer</p>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-avatar">👨‍💻</div>
+                    <h3>Yohana Mourad Moawad</h3>
+                    <p class="role">Developer</p>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-avatar">👨‍💻</div>
+                    <h3>Ziad Hamed Al-Khozamy</h3>
+                    <p class="role">Developer</p>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-avatar">👨‍💻</div>
+                    <h3>Ahmed Al Amir Ahmed Shawky</h3>
+                    <p class="role">Developer</p>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-avatar">👨‍💻</div>
+                    <h3>Youssef Safwat Sadek Ata</h3>
+                    <p class="role">Developer</p>
+                </div>
+            </div>
+
+            <div class="team-footer">
+                <h3>🐟 Thank You! 🐟</h3>
+                <p>Building a smarter, sustainable future for Egyptian aquaculture.</p>
+                <div class="fish-icon">🌊🐠🐟🐡🌊</div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const sections = document.querySelectorAll('.section');
+        const navDots = document.querySelectorAll('.nav-dot');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    const sectionIndex = Array.from(sections).indexOf(entry.target);
+                    navDots.forEach((dot, index) => {
+                        dot.classList.toggle('active', index === sectionIndex);
+                    });
+                }
+            });
+        }, { threshold: 0.2 });
+
+        sections.forEach(section => observer.observe(section));
+
+        navDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                sections[index].scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Dynamic bubbles
+        function createBubble() {
+            const hero = document.querySelector('.hero .bubbles');
+            if (!hero) return;
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            bubble.style.left = Math.random() * 100 + '%';
+            bubble.style.width = Math.random() * 30 + 10 + 'px';
+            bubble.style.height = bubble.style.width;
+            bubble.style.animationDuration = Math.random() * 4 + 6 + 's';
+            
+            hero.appendChild(bubble);
+            setTimeout(() => bubble.remove(), 10000);
+        }
+
+        setInterval(createBubble, 2000);
+    </script>
+</body>
+</html>
