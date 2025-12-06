@@ -126,12 +126,30 @@
             backdrop-filter: blur(10px);
             transition: all 0.4s ease;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            position: relative;
         }
 
         .image-placeholder:hover {
             transform: translateY(-5px);
             border-color: rgba(255, 255, 255, 0.5);
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 14px;
+            transition: transform 0.4s ease;
+        }
+
+        .image-placeholder:hover img {
+            transform: scale(1.03);
         }
 
         .image-text {
@@ -638,6 +656,10 @@
             .etl-image {
                 flex-direction: row;
             }
+
+            .etl-image .image-placeholder {
+                min-height: 200px;
+            }
         }
 
         @media (max-width: 900px) {
@@ -670,6 +692,10 @@
             .etl-image {
                 flex-direction: column;
             }
+
+            .image-placeholder {
+                min-height: 250px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -696,11 +722,19 @@
             .section-title {
                 font-size: 2rem;
             }
+
+            .image-placeholder {
+                min-height: 220px;
+            }
         }
 
         @media (max-width: 500px) {
             .team-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .image-placeholder {
+                min-height: 180px;
             }
         }
     </style>
@@ -742,7 +776,7 @@
                     </div>
                 </div>
                 <div class="image-placeholder" style="min-height: 350px;">
-                    <div class="image-text">🐟 Main System Overview 🐟<br><br>Smart Fish Farm Dashboard</div>
+                    <img src="image/1.png" alt="Main System Overview">
                 </div>
             </div>
         </div>
@@ -765,7 +799,7 @@
                     </div>
                 </div>
                 <div class="image-placeholder">
-                    <div class="image-text">📊 System Architecture 📊<br><br>Complete IoT Pipeline</div>
+                    <img src="image/2.png" alt="System Architecture">
                 </div>
             </div>
         </div>
@@ -790,7 +824,7 @@
                     <p style="line-height: 1.8;">Sensors track temperature, dissolved oxygen, pH, ammonia, turbidity, and other vital indicators impacting fish health.</p>
                 </div>
                 <div class="image-placeholder">
-                    <div class="image-text">🎯 Vision 2030 🎯<br><br>Strategic Goals</div>
+                    <img src="image/3.png" alt="Introduction Overview">
                 </div>
             </div>
         </div>
@@ -849,7 +883,7 @@
                     </div>
                 </div>
                 <div class="image-placeholder">
-                    <div class="image-text">📈 Data Collection & Processing 📈<br><br>Real Farm Data Sources</div>
+                    <img src="image/4.png" alt="Data Simulation">
                 </div>
             </div>
         </div>
@@ -888,10 +922,10 @@
                 </div>
                 <div class="etl-image">
                     <div class="image-placeholder">
-                        <div class="image-text">🔧 ETL Pipeline Flow 🔧<br><br>Data Processing Architecture</div>
+                        <img src="image/5.png" alt="ETL Process 1">
                     </div>
                     <div class="image-placeholder">
-                        <div class="image-text">💾 Database Schema 💾<br><br>SQLite3 Structure</div>
+                        <img src="image/6.png" alt="ETL Process 2">
                     </div>
                 </div>
             </div>
@@ -915,7 +949,7 @@
                     </div>
                 </div>
                 <div class="image-placeholder">
-                    <div class="image-text">🚨 Apache Kafka Architecture 🚨<br><br>Alert Flow Diagram</div>
+                    <img src="image/7.png" alt="Alert System">
                 </div>
             </div>
         </div>
@@ -929,7 +963,7 @@
             
             <div class="dashboard-main">
                 <div class="image-placeholder dashboard-main-image">
-                    <div class="image-text">🖥️ Dashboard Main Interface 🖥️<br><br>Live Monitoring Control Center</div>
+                    <img src="image/8.png" alt="Dashboard Main View">
                 </div>
                 <div class="dashboard-features">
                     <div class="dashboard-feature">
@@ -953,13 +987,13 @@
 
             <div class="dashboard-gallery">
                 <div class="image-placeholder">
-                    <div class="image-text">📉 Trend Charts 📉<br><br>Historical Data</div>
+                    <img src="image/9.png" alt="Dashboard View 1">
                 </div>
                 <div class="image-placeholder">
-                    <div class="image-text">⚠️ Alert Panel ⚠️<br><br>Notifications</div>
+                    <img src="image/10.png" alt="Dashboard View 2">
                 </div>
                 <div class="image-placeholder">
-                    <div class="image-text">🐠 Tank Status 🐠<br><br>Real-time Monitoring</div>
+                    <img src="image/11.png" alt="Dashboard View 3">
                 </div>
             </div>
         </div>
@@ -997,7 +1031,7 @@
                     <p style="margin-top: 15px; font-weight: 600; color: #ffd166;">Building sustainable, technology-enabled economic sectors for Vision 2030.</p>
                 </div>
                 <div class="image-placeholder">
-                    <div class="image-text">🎯 Future Vision 🎯<br><br>Smart Aquaculture Roadmap</div>
+                    <img src="image/12.png" alt="Conclusion">
                 </div>
             </div>
         </div>
